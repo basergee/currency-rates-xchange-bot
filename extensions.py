@@ -9,6 +9,8 @@ import json
 class Convertor:
     @staticmethod
     def get_price(base, quote, amount):
+        # Документация на API: https://exchangerate.host/#/#docs
+        # API позволяет сразу получить интересующую нас сумму
         api_request = f'https://api.exchangerate.host/convert?' \
                       f'from={base}&to={quote}&amount={amount}'
         response = requests.get(api_request)
