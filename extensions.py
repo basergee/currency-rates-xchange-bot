@@ -6,6 +6,10 @@ import requests
 import json
 
 
+class APIException(Exception):
+    pass
+
+
 class Convertor:
     @staticmethod
     def get_price(base, quote, amount):
@@ -18,7 +22,13 @@ class Convertor:
         # Можно вызвать response.json(), но в задании указано, что надо
         # использовать библиотеку JSON, поэтому делаем так
         data = json.loads(response.text)
-        return data['result']
+
+        # API не выдает ошибку, но в случае неудачной конверсии, результат
+        # будет None
+        result = data['result']
+        if result is None:
+            raise APIException("Неправильная валюта")
+        return result
 
 
 # Проверим работу функции отдельно от остальной программы
