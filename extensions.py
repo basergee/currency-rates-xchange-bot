@@ -3,6 +3,7 @@
 """
 
 import requests
+import json
 
 
 class Convertor:
@@ -11,7 +12,9 @@ class Convertor:
         api_request = f'https://api.exchangerate.host/convert?from={base}&to={quote}'
         response = requests.get(api_request)
 
-        data = response.json()
+        # Можно вызвать response.json(), но в задании указано, что надо
+        # использовать библиотеку JSON, поэтому делаем так
+        data = json.loads(response.text)
         return amount * data['info']['rate']
 
 
