@@ -17,18 +17,28 @@ class Convertor:
         # API позволяет сразу получить интересующую нас сумму
         payload = {'from': base, 'to': quote, 'amount': amount}
         api_url = f'https://api.exchangerate.host/convert'
-        response = requests.get(api_url, params=payload)
 
-        # Можно вызвать response.json(), но в задании указано, что надо
-        # использовать библиотеку JSON, поэтому делаем так
-        data = json.loads(response.text)
+        # response = None
+        try:
+            response = requests.get(api_url, params=payload)
+        except requests.exceptions.ConnectionError as e:
+            print("Connection error! ", e)
+        except requests.RequestException as e:
+            print("Some error! ", e)
+        else:
+            # Можно вызвать response.json(), но в задании указано, что надо
+            # использовать библиотеку JSON, поэтому делаем так
+            data = json.loads(response.text)
 
-        # API не выдает ошибку, но в случае неудачной конверсии, результат
-        # будет None
-        result = data['result']
-        if result is None:
-            raise APIException("Неправильная валюта")
-        return result
+            # API не выдает ошибку, но в случае неудачной конверсии, результат
+            # будет None
+            print(data)
+            result = data['result']
+            if result is None:
+                raise APIException("Неправильная валюта")
+            return result
+
+        return -1
 
 
 # Проверим работу функции отдельно от остальной программы
