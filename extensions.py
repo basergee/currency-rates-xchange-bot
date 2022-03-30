@@ -20,6 +20,11 @@ class APIException(Exception):
 class Convertor:
     @staticmethod
     def get_price(base, quote, amount):
+        if base not in currencies or quote not in currencies:
+            raise APIException("Нет такой валюты")
+        if amount < 0:
+            raise APIException("Введите положительное число")
+
         # Документация на API: https://exchangerate.host/#/#docs
         # API позволяет сразу получить интересующую нас сумму
         payload = {'from': currencies.get(base), 'to': currencies.get(quote),
