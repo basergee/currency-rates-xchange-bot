@@ -7,6 +7,8 @@
 import telebot
 
 import config
+from extensions import Convertor
+from extensions import APIException
 
 
 def main():
@@ -24,7 +26,7 @@ def send_welcome(message):
 # Функция реагирует на обычные сообщения. Предполагается, что каждое сообщение
 # боту -- это запрос на преобразование валюты. Такой запрос состоит из трех
 # частей:
-# 
+#
 # <имя валюты, цену которой требуется узнать>
 # <имя валюты, в которой надо узнать цену первой валюты>
 # <количество первой валюты>.
@@ -38,7 +40,16 @@ def make_conversion(message):
     msg = message.text.split()
     if len(msg) > 3:
         bot.reply_to(message, "Неправильная строка. Слишком много слов")
-    print(msg)
+        return
+    if len(msg) < 3:
+        bot.reply_to(message, "Неправильная строка. Слишком мало слов")
+        return
+
+    try:
+        # Сейчас msg содержит ровно 3 элемента. Передаем их все
+        bot.reply_to(message, Convertor.get_price(*msg))
+    except APIException as e:
+        bot.reply_to(message, e)
 
 
 if __name__ == "__main__":
