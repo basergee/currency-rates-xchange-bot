@@ -56,4 +56,16 @@ class Convertor:
 
 # Проверим работу функции отдельно от остальной программы
 if __name__ == "__main__":
-    print(Convertor.get_price("USD", "RUB", 45))
+    tests = [
+        ("долларЫ", "рубль", 100),
+        ("доллар", "рублИ", 100),
+        ("доллар", "рубль", -1),
+        ("доллар", "рубль", 0),
+        ("доллар", "рубль", 100),
+    ]
+
+    for t in tests:
+        try:
+            print(Convertor.get_price(*t))
+        except APIException as e:
+            print(e)
