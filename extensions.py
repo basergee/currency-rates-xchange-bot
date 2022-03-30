@@ -22,7 +22,7 @@ class Convertor:
     def get_price(base, quote, amount):
         if base not in currencies or quote not in currencies:
             raise APIException("Нет такой валюты")
-        if amount < 0:
+        if amount <= 0:
             raise APIException("Введите положительное число")
 
         # Документация на API: https://exchangerate.host/#/#docs
