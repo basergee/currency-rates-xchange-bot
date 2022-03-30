@@ -22,6 +22,12 @@ class Convertor:
     def get_price(base, quote, amount):
         if base not in currencies or quote not in currencies:
             raise APIException("Нет такой валюты")
+
+        try:
+            amount = float(amount)
+        except ValueError:
+            raise APIException("Введите количество валюты")
+
         if amount <= 0:
             raise APIException("Введите положительное число")
 
