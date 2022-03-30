@@ -35,7 +35,7 @@ class Convertor:
             print(data)
             result = data['result']
             if result is None:
-                raise APIException("Неправильная валюта")
+                raise APIException("Сервер не смог выполнить преобразование")
             return result
 
         return -1
