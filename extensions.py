@@ -28,7 +28,7 @@ class Convertor:
         # Документация на API: https://exchangerate.host/#/#docs
         # API позволяет сразу получить интересующую нас сумму
         payload = {'from': currencies.get(base), 'to': currencies.get(quote),
-                   'amount': currencies.get(amount)}
+                   'amount': amount}
         api_url = f'https://api.exchangerate.host/convert'
 
         # response = None
