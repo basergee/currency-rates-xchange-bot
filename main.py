@@ -9,6 +9,7 @@ import telebot
 import config
 from extensions import Convertor
 from extensions import APIException
+from extensions import currencies
 
 
 def main():
@@ -21,6 +22,15 @@ bot = telebot.TeleBot(config.TOKEN)
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     bot.reply_to(message, "Привет")
+
+
+@bot.message_handler(commands=['values'])
+def send_values(message):
+    msg = "Вам доступны следующие валюты:\n"
+    for v in currencies.keys():
+        msg += '- ' + v + '\n'
+
+    bot.send_message(message.chat.id, msg)
 
 
 # Функция реагирует на обычные сообщения. Предполагается, что каждое сообщение
