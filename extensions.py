@@ -20,6 +20,11 @@ class APIException(Exception):
 class Convertor:
     @staticmethod
     def get_price(base, quote, amount):
+        # Для удобства пользователя делаем наименования валют не зависящими от
+        # регистра букв
+        base = base.lower()
+        quote = quote.lower()
+
         if base not in currencies or quote not in currencies:
             raise APIException("Нет такой валюты")
 
