@@ -42,13 +42,16 @@ class Convertor:
                    'amount': amount}
         api_url = f'https://api.exchangerate.host/convert'
 
-        # response = None
         try:
             response = requests.get(api_url, params=payload)
-        except requests.exceptions.ConnectionError as e:
-            print("Connection error! ", e)
+            # Проверим статус запроса, чтобы выявить ошибки, такие как '404'
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            raise APIException("Ошибка! Ответ сервера: " + e.response.reason)
+        except requests.exceptions.ConnectionError:
+            raise APIException("Ошибка соединения с сервером!")
         except requests.RequestException as e:
-            print("Some error! ", e)
+            raise APIException(e)
         else:
             # Можно вызвать response.json(), но в задании указано, что надо
             # использовать библиотеку JSON, поэтому делаем так
@@ -61,8 +64,6 @@ class Convertor:
             if result is None:
                 raise APIException("Сервер не смог выполнить преобразование")
             return result
-
-        return -1
 
 
 # Проверим работу функции отдельно от остальной программы
