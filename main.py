@@ -59,10 +59,10 @@ def make_conversion(message):
     # проверить, что сообщение соответствует критерию: два слова и одно число
     msg = message.text.split()
     if len(msg) > 3:
-        bot.reply_to(message, "Неправильная строка. Слишком много слов")
+        bot.reply_to(message, "Неправильная строка. Слишком много параметров")
         return
     if len(msg) < 3:
-        bot.reply_to(message, "Неправильная строка. Слишком мало слов")
+        bot.reply_to(message, "Неправильная строка. Слишком мало параметров")
         return
 
     try:
