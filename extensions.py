@@ -6,7 +6,7 @@ import requests
 import json
 
 
-currencies = {
+CURRENCIES = {
     'доллар': 'USD',
     'евро': 'EUR',
     'рубль': 'RUB'
@@ -25,7 +25,7 @@ class Convertor:
         base = base.lower()
         quote = quote.lower()
 
-        if base not in currencies or quote not in currencies:
+        if base not in CURRENCIES or quote not in CURRENCIES:
             raise APIException("Нет такой валюты")
 
         try:
@@ -38,7 +38,7 @@ class Convertor:
 
         # Документация на API: https://exchangerate.host/#/#docs
         # API позволяет сразу получить интересующую нас сумму
-        payload = {'from': currencies.get(base), 'to': currencies.get(quote),
+        payload = {'from': CURRENCIES.get(base), 'to': CURRENCIES.get(quote),
                    'amount': amount}
         api_url = f'https://api.exchangerate.host/convert'
 

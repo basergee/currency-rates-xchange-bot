@@ -9,7 +9,7 @@ import telebot
 import config
 from extensions import Convertor
 from extensions import APIException
-from extensions import currencies
+from extensions import CURRENCIES
 
 
 def main():
@@ -37,7 +37,7 @@ def send_welcome(message):
 @bot.message_handler(commands=['values'])
 def send_values(message):
     msg = "Вам доступны следующие валюты:\n"
-    for v in currencies.keys():
+    for v in CURRENCIES.keys():
         msg += '- ' + v + '\n'
 
     bot.send_message(message.chat.id, msg)
