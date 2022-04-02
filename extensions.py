@@ -63,7 +63,8 @@ class Convertor:
             result = data['result']
             if result is None:
                 raise APIException("Сервер не смог выполнить преобразование")
-            return result
+            # API возвращает 6 знаков после запятой. Округлим до двух знаков
+            return round(result, 2)
 
 
 # Проверим работу функции отдельно от остальной программы
